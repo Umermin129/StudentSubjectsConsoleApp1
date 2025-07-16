@@ -12,9 +12,24 @@
         this.rollNo = rollNo;
     }
     public Student() { }
+
+    public void ShowStudentsAverage(List<Student> studentList)
+    {
+        Console.Clear();
+        Console.WriteLine("Students Average:");
+        Console.WriteLine("Roll No   Name       Average");
+        foreach (var student in studentList)
+        {
+            Console.WriteLine("{0}      {1}         {2:0.00}",student.rollNo, student.name,student.marksAverage);
+        }
+        Console.WriteLine("Press Enter to Go Back");
+        Console.ReadLine();
+    }
+
     public void ShowStudentsList(List<Student> studentList)
     {
-        Console.WriteLine("Here is the list of all students:\n");
+        Console.Clear();
+        Console.WriteLine("List of all students:\n");
         Console.WriteLine("Roll No   Name       Subjects");
         Console.WriteLine("----------------------------------\n");
         foreach (Student student in studentList)
@@ -29,22 +44,27 @@
             Console.WriteLine(); // New line after each student
         }
         Console.WriteLine();
+        Console.Write("Press Enter to Go Back!");
+        Console.ReadLine();
     }
     public double marksAverage => Subjects.Average(s => s.Marks);
     public bool isPassed => marksAverage >= 50;
 
     public void passedStudents(List<Student> studentList)
     {
-        var passed = studentList.Where(s => s.isPassed).ToList();
-        if(!passed.Any())
+        Console.Clear();
+        Console.Write("Enter the Roll No of Student : ");
+        var rollNo = Console.ReadLine();
+        var student = studentList.FirstOrDefault(s=>s.rollNo.Equals(rollNo));
+        if(student == null)
         {
-            Console.WriteLine("No Student Passed");
+            Console.WriteLine("No student Found!");
         }
-        Console.WriteLine("Passed Students : \n");
-        foreach (var student in passed)
-        {
-            Console.WriteLine($"Name : {student.name} Roll No: {student.rollNo} Average : {student.marksAverage}");
-        }
+        else
+        Console.WriteLine($"Name : {student.name}   Roll No : {student.rollNo}   {(student.isPassed? "Passed":"Failed")} ");
+        
+        Console.WriteLine("Press Enter to Go Back");
+        Console.ReadLine();
     }
 } 
 class Subject
@@ -95,6 +115,7 @@ public static partial class Program
   
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("*****Student Management System*******\n");
             Console.WriteLine("1. Display All Students");
             Console.WriteLine("2. Display each Student Average");
@@ -107,7 +128,7 @@ public static partial class Program
                     s.ShowStudentsList(students);
                     break;
                 case "2":
-                    s.ShowStudentsList(students);
+                    s.ShowStudentsAverage(students);
                     break;
                 case "3":
                     s.passedStudents(students);
