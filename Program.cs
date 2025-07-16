@@ -16,13 +16,14 @@
     public void ShowStudentsAverage(List<Student> studentList)
     {
         Console.Clear();
-        Console.WriteLine("Students Average:");
+        Console.WriteLine("Students Average:\n");
         Console.WriteLine("Roll No   Name       Average");
+        Console.WriteLine("----------------------------------\n");
         foreach (var student in studentList)
         {
-            Console.WriteLine("{0}      {1}         {2:0.00}",student.rollNo, student.name,student.marksAverage);
+            Console.WriteLine("{0}     {1}         {2:0.00}",student.rollNo, student.name,student.marksAverage);
         }
-        Console.WriteLine("Press Enter to Go Back");
+        Console.Write("\nPress Enter to Go Back !");
         Console.ReadLine();
     }
 
@@ -52,19 +53,25 @@
 
     public void passedStudents(List<Student> studentList)
     {
-        Console.Clear();
-        Console.Write("Enter the Roll No of Student : ");
-        var rollNo = Console.ReadLine();
-        var student = studentList.FirstOrDefault(s=>s.rollNo.Equals(rollNo));
-        if(student == null)
-        {
-            Console.WriteLine("No student Found!");
-        }
-        else
-        Console.WriteLine($"Name : {student.name}   Roll No : {student.rollNo}   {(student.isPassed? "Passed":"Failed")} ");
         
-        Console.WriteLine("Press Enter to Go Back");
-        Console.ReadLine();
+        while(true)
+        {
+            Console.Clear();
+            Console.Write("Enter the Roll No of Student (O for Exit) : ");
+            var rollNo = Console.ReadLine();
+            if (rollNo == "0") return;
+            var student = studentList.FirstOrDefault(s => s.rollNo.Equals(rollNo));
+            if (student == null)
+            {
+                Console.WriteLine("No student Found!");
+            }
+            else
+                Console.WriteLine($"\nName : {student.name}   Roll No : {student.rollNo}   {(student.isPassed ? "Passed" : "Failed")} ");
+
+            Console.Write("\nPress Enter to Go Back !");
+            Console.ReadLine();
+               
+        }
     }
 } 
 class Subject
@@ -117,8 +124,8 @@ public static partial class Program
         {
             Console.Clear();
             Console.WriteLine("*****Student Management System*******\n");
-            Console.WriteLine("1. Display All Students");
-            Console.WriteLine("2. Display each Student Average");
+            Console.WriteLine("1. Display All Students ");
+            Console.WriteLine("2. Display all Students Average");
             Console.WriteLine("3. Show Passed Students");
             Console.WriteLine("4. Exit\n");
             var input = Console.ReadLine();
