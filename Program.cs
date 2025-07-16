@@ -32,6 +32,20 @@
     }
     public double marksAverage => Subjects.Average(s => s.Marks);
     public bool isPassed => marksAverage >= 50;
+
+    public void passedStudents(List<Student> studentList)
+    {
+        var passed = studentList.Where(s => s.isPassed).ToList();
+        if(!passed.Any())
+        {
+            Console.WriteLine("No Student Passed");
+        }
+        Console.WriteLine("Passed Students : \n");
+        foreach (var student in passed)
+        {
+            Console.WriteLine($"Name : {student.name} Roll No: {student.rollNo} Average : {student.marksAverage}");
+        }
+    }
 } 
 class Subject
 {
@@ -96,7 +110,7 @@ public static partial class Program
                     s.ShowStudentsList(students);
                     break;
                 case "3":
-                    s.ShowStudentsList(students);
+                    s.passedStudents(students);
                     break;
                 case "4":
                     return;
